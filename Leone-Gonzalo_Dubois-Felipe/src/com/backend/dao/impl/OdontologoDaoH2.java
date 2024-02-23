@@ -17,7 +17,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
     @Override
     public Odontologo guardar(Odontologo odontologo) {
 
-        String insert = "INSERT INTO ODONTOLOGOS (MATRICULA, NOMBRE, APELLIDO) VALUES(?, ?, ?)";
+        String insert = "INSERT INTO ODONTOLOGOS (NUMEROMATRICULA, NOMBRE, APELLIDO) VALUES(?, ?, ?)";
         Connection connection = null;
         Odontologo odontologoGuardado = null;
 
@@ -62,10 +62,9 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
                 }
             }
         }
-
-
         return odontologoGuardado;
     }
+
 
     @Override
 
@@ -94,7 +93,7 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             try {
                 connection.close();
             } catch (Exception ex) {
-                LOGGER.error("Ha ocurrido un error al intentar cerrar la bdd. " + ex.getMessage());
+                LOGGER.error("Ha ocurrido un error al intentar cerrar la base de datos " + ex.getMessage());
                 ex.printStackTrace();
             }
         }

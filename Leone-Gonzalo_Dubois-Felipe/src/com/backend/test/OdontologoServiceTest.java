@@ -7,6 +7,7 @@ import com.backend.service.OdontologoService;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +16,7 @@ class OdontologoServiceTest {
     private OdontologoService odontologoService;
 
     @Test
-    void deberiaInsertarYRetornarIdDeOdontologoEnH2(){
+    void deberiaRegistrarUnOdontologoConIdEnH2(){
         odontologoService = new OdontologoService(new OdontologoDaoH2());
         Odontologo odontologoARegistrar = new Odontologo(123, "Gonzalo", "Leone");
 
@@ -25,7 +26,7 @@ class OdontologoServiceTest {
     }
 
     @Test
-    void deberiaInsertarYRetornarIdDeOdontologoEnMemoria(){
+    void deberiaRegistrarUnOdontologoConIdEnMemoria(){
         odontologoService = new OdontologoService(new OdontologoDaoMemoria(new ArrayList<>()));
         Odontologo odontologoARegistrar = new Odontologo(321, "Felipe", "Dubois");
 
@@ -33,6 +34,26 @@ class OdontologoServiceTest {
 
         assertNotNull(odontologoRegistrado.getId());
     }
+
+    @Test
+    void deberiaCrearUnaListaDeOdontologosRegistradosEnH2(){
+        odontologoService = new OdontologoService(new OdontologoDaoH2());
+        List<Odontologo> listaDeOdontologos = odontologoService.listarOdontologos();
+        assertNotNull(listaDeOdontologos);
+    }
+
+    @Test
+    void deberiaCrearUnaListaDeOdontologosRegistradosEnMemoria(){
+        odontologoService = new OdontologoService(new OdontologoDaoMemoria(new ArrayList<>()));
+        List<Odontologo> listaDeOdontologos = odontologoService.listarOdontologos();
+        assertNotNull(listaDeOdontologos);
+    }
+
+
+
+
+
+
 
 
 
