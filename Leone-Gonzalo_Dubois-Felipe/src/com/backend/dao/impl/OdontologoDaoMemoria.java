@@ -26,6 +26,7 @@ public class OdontologoDaoMemoria implements IDao<Odontologo> {
 
     @Override
     public List<Odontologo> listarTodos() {
-        return null;
+        LOGGER.info("Listando todos los odontologos: " + odontologoRepositorio);
+        return odontologoRepositorio;
     }
 }
