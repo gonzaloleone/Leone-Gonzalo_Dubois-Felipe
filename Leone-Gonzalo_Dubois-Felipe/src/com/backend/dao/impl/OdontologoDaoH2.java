@@ -32,13 +32,12 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
             preparedStatement.setString(3, odontologo.getApellido());
             preparedStatement.execute();
 
-            connection.commit();
-
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
                 odontologoGuardado = new Odontologo(resultSet.getInt(1), odontologo.getNumeroMatricula(), odontologo.getNombre(), odontologo.getApellido());
             }
 
+            connection.commit();
 
             LOGGER.info("Odontologo guardado: " + odontologoGuardado);
 
@@ -70,27 +69,22 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
 
     @Override
 
-    public List<Odontologo> buscarTodos()  {
+    public List<Odontologo> listarTodos()  {
 
         String select = "SELECT * FROM ODONTOLOGOS";
         Connection connection = null;
-        List<Odontologo> odontologosListados = new ArrayList<>();
+        List<Odontologo> odontologos = new ArrayList<>();
 
         try {
             connection = H2Connection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(select);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-
-
+                Odontologo odontologo = crearObjetoOdontologo(resultSet);
+                odontologos.add(odontologo);
             }
 
-            LOGGER.info("Listado de todos los odontologos: " + );
-
-
-
-
-            LOGGER.info("" + odontologosListados);
+            LOGGER.info("Listado de todos los odontologos: " + odontologos);
 
         }
         catch (Exception e) {
@@ -106,7 +100,12 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
         }
 
 
-        return odontologosListados;
+        return odontologos;
+    }
+
+    private Odontologo crearObjetoOdontologo(ResultSet resultSet) throws SQLException {
+        return new Odontologo(resultSet.getInt("id"), resultSet.getInt("numeroMatricula"),resultSet.getString("nombre"), resultSet.getString("apellido"));
+
     }
 
 }
