@@ -32,4 +32,9 @@ public class OdontologoDaoMemoria implements IDao<Odontologo> {
         LOGGER.info("Listando todos los odontologos: " + odontologoRepositorio);
         return odontologoRepositorio;
     }
+
+    @Override
+    public Odontologo buscarPorId(int id){
+        return null;
+    }
 }

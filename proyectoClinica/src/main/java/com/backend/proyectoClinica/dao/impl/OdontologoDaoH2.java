@@ -106,6 +106,34 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
         return odontologos;
     }
 
+    @Override
+    public Odontologo buscarPorId(int id){
+        Connection connection = null;
+        Odontologo odontologo = null;
+        try {
+            connection = H2Connection.getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ODONTOLOGOS WHERE ID = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                odontologo = crearObjetoOdontologo(rs);
+            }
+            LOGGER.info("Se ha encontrado el odontologo con id " + id + ": " + odontologo);
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception ex) {
+                LOGGER.error("Ha ocurrido un error al intentar cerrar la bdd. " + ex.getMessage());
+                ex.printStackTrace();
+            }
+        }
+        return odontologo;
+    }
+
     private Odontologo crearObjetoOdontologo(ResultSet resultSet) throws SQLException {
         return new Odontologo(resultSet.getInt("id"), resultSet.getInt("numeroMatricula"),resultSet.getString("nombre"), resultSet.getString("apellido"));
 
