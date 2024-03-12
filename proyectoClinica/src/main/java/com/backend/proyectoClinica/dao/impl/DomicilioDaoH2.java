@@ -5,10 +5,13 @@ import com.backend.proyectoClinica.dbconnection.H2Connection;
 import com.backend.proyectoClinica.entity.Domicilio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+@Component
 
 public class DomicilioDaoH2 implements IDao<Domicilio> {
 

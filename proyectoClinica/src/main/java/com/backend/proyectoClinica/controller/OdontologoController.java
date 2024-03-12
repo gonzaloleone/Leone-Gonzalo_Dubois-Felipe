@@ -29,8 +29,8 @@ public class OdontologoController {
     }
 
     @GetMapping("/{id}") //localhost:8080/pacientes/x
-    //public ResponseEntity<OdontologoSalidaDto> buscarPacientePorId(@PathVariable int id){
-    //    return new ResponseEntity<>(odontologoService.buscarOdontologoPorId(id), HttpStatus.OK);
+    public ResponseEntity<OdontologoSalidaDto> buscarPacientePorId(@PathVariable int id){
+       return new ResponseEntity<>(odontologoService.buscarOdontologoPorId(id), HttpStatus.OK);
     //}
 
 

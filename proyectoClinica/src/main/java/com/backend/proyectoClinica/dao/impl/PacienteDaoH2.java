@@ -6,10 +6,13 @@ import com.backend.proyectoClinica.entity.Domicilio;
 import com.backend.proyectoClinica.entity.Paciente;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+@Component
 
 public class PacienteDaoH2 implements IDao<Paciente> {
 
@@ -150,4 +153,5 @@ public class PacienteDaoH2 implements IDao<Paciente> {
         Domicilio domicilio = new DomicilioDaoH2().buscarPorId(resultSet.getInt("domicilio_id"));
 
         return new Paciente(resultSet.getInt("id"), resultSet.getString("nombre"), resultSet.getString("apellido"), resultSet.getInt("dni"), resultSet.getDate("fecha").toLocalDate(), domicilio);
+    }
 }
