@@ -36,14 +36,14 @@ public class PacienteDaoH2 implements IDao<Paciente> {
             preparedStatement.setString(2, paciente.getApellido());
             preparedStatement.setInt(3, paciente.getDni());
             preparedStatement.setDate(4, Date.valueOf(paciente.getFechaIngreso()));
-            preparedStatement.setInt(5, domicilioRegistrado.getId());
+            preparedStatement.setInt(5, domicilioRegistrado.getLong());
             preparedStatement.execute();
 
             pacienteRegistrado = new Paciente(paciente.getNombre(), paciente.getApellido(), paciente.getDni(), paciente.getFechaIngreso(), domicilioRegistrado);
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
-                pacienteRegistrado.setId(resultSet.getInt("id"));
+                pacienteRegistrado.setLong(resultSet.getLong("id"));
             }
 
             connection.commit();
@@ -152,6 +152,6 @@ public class PacienteDaoH2 implements IDao<Paciente> {
 
         Domicilio domicilio = new DomicilioDaoH2().buscarPorId(resultSet.getInt("domicilio_id"));
 
-        return new Paciente(resultSet.getInt("id"), resultSet.getString("nombre"), resultSet.getString("apellido"), resultSet.getInt("dni"), resultSet.getDate("fecha").toLocalDate(), domicilio);
+        return new Paciente(resultSet.getLong("id"), resultSet.getString("nombre"), resultSet.getString("apellido"), resultSet.getInt("dni"), resultSet.getDate("fecha").toLocalDate(), domicilio);
     }
 }

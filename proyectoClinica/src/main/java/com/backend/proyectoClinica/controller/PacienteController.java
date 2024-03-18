@@ -28,14 +28,14 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}") //localhost:8080/pacientes/x
-    public ResponseEntity<PacienteSalidaDto> buscarPacientePorId(@PathVariable int id){
+    public ResponseEntity<PacienteSalidaDto> buscarPacientePorId(@PathVariable Long id){
         return new ResponseEntity<>(pacienteService.buscarPacientePorId(id), HttpStatus.OK);
     }
 
 
     //POST
-    @PostMapping("/registrar")
-    public ResponseEntity<PacienteSalidaDto> registrarPaciente(@RequestBody @Valid PacienteEntradaDto paciente){
+    @PostMapping("/guardar")
+    public ResponseEntity<PacienteSalidaDto> guardarPaciente(@RequestBody @Valid PacienteEntradaDto paciente){
         return new ResponseEntity<>(pacienteService.guardarPaciente(paciente), HttpStatus.CREATED);
     }
 
@@ -48,7 +48,7 @@ public class PacienteController {
 
     //DELETE
     @DeleteMapping("/eliminar")//localhost:8080/pacientes/eliminar?id=x
-    public ResponseEntity<?> eliminarPaciente(@RequestParam int id){
+    public ResponseEntity<?> eliminarPaciente(@RequestParam Long id){
         //pacienteService.eliminarPaciente(id);
         return new ResponseEntity<>("Paciente eliminado correctamente", HttpStatus.NO_CONTENT);
     }

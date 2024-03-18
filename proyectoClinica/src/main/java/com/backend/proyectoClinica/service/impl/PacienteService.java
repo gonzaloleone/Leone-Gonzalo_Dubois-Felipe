@@ -28,9 +28,7 @@ public class PacienteService implements IPacienteService {
         configureMapping();
     }
 
-    public PacienteService(IDao<Paciente> pacienteIDao) {
-        this.pacienteIDao = pacienteIDao;
-    }
+
     @Override
     public PacienteSalidaDto guardarPaciente(PacienteEntradaDto paciente) {
         //Logueamos lo que recibimos
@@ -65,8 +63,8 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public PacienteSalidaDto buscarPacientePorId(int id) {
-        Paciente pacienteBuscado = pacienteIDao.buscarPorId(id);
+    public PacienteSalidaDto buscarPacientePorId(Long id) {
+        Paciente pacienteBuscado = pacienteRepository.findById(id).orElse(null);
         PacienteSalidaDto pacienteEncontrado = null;
 
         if(pacienteBuscado != null){

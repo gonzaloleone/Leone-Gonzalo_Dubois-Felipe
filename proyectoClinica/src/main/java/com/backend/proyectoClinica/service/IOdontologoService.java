@@ -12,5 +12,5 @@ public interface IOdontologoService {
 
     List<OdontologoSalidaDto> listarOdontologos();
 
-    Odontologo buscarOdontologoPorId(int id);
+    OdontologoSalidaDto buscarOdontologoPorId(Long id);
 }
