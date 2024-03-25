@@ -1,9 +1,10 @@
 package com.backend.proyectoClinica.service.impl;
 
-import com.backend.proyectoClinica.dao.IDao;
 import com.backend.proyectoClinica.dto.entrada.PacienteEntradaDto;
 import com.backend.proyectoClinica.dto.salida.PacienteSalidaDto;
 import com.backend.proyectoClinica.entity.Paciente;
+import com.backend.proyectoClinica.exceptions.ResourceNotFoundException;
+import com.backend.proyectoClinica.repository.PacienteRepository;
 import com.backend.proyectoClinica.service.IPacienteService;
 import com.backend.proyectoClinica.utils.JsonPrinter;
 import org.modelmapper.ModelMapper;
@@ -18,12 +19,12 @@ public class PacienteService implements IPacienteService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(PacienteService.class);
 
-    private IDao<Paciente> pacienteIDao;
+    private PacienteRepository pacienteRepository;
 
     private ModelMapper modelMapper;
 
-    public PacienteService(IDao<Paciente> pacienteIDao, ModelMapper modelMapper) {
-        this.pacienteIDao = pacienteIDao;
+    public PacienteService(PacienteRepository pacienteRepository, ModelMapper modelMapper) {
+        this.pacienteRepository = pacienteRepository;
         this.modelMapper = modelMapper;
         configureMapping();
     }
@@ -36,7 +37,7 @@ public class PacienteService implements IPacienteService {
         //convertimos mediante el mapper de dtoEntrada a entidad
         Paciente pacienteEntidad = modelMapper.map(paciente, Paciente.class);
         //mandamos a persistir a la capa dao y obtenemos una entidad con ID
-        Paciente pacienteEntidaConId = pacienteIDao.guardar(pacienteEntidad);
+        Paciente pacienteEntidaConId = pacienteRepository.save(pacienteEntidad);
         //transformamos la entidad obtenida en salidaDto
         PacienteSalidaDto pacienteSalidaDto = modelMapper.map(pacienteEntidaConId, PacienteSalidaDto.class);
         //Logueamos lo que sale
@@ -46,7 +47,7 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public List<PacienteSalidaDto> listarPacientes() {
-        List<PacienteSalidaDto> pacientesSalidaDto =  pacienteIDao.listarTodos()
+        List<PacienteSalidaDto> pacientesSalidaDto =  pacienteRepository.findAll()
                 .stream()
                 .map(paciente -> modelMapper.map(paciente, PacienteSalidaDto.class))
                 .toList();
@@ -77,6 +78,23 @@ public class PacienteService implements IPacienteService {
         return pacienteEncontrado;
     }
 
+    @Override
+    public void eliminarPaciente(Long id) throws ResourceNotFoundException {
+
+        if (buscarPacientePorId(id) != null) {
+            pacienteRepository.deleteById(id);
+            LOGGER.warn("Se ha eliminado el paciente con id {}", id);
+        } else {
+            //LOGGER.error("No se ha encontrado el paciente con id {}", id);
+            throw new ResourceNotFoundException("No existe registro de paciente con id " + id);
+        }
+
+    }
+
+    @Override
+    public PacienteSalidaDto modificarPaciente(PacienteEntradaDto pacienteEntradaDto, Long id) {
+        return null;
+    }
 
 
     private void configureMapping(){

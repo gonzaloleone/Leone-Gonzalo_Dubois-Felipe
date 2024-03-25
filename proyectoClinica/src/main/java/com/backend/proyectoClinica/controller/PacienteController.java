@@ -3,6 +3,7 @@ package com.backend.proyectoClinica.controller;
 
 import com.backend.proyectoClinica.dto.entrada.PacienteEntradaDto;
 import com.backend.proyectoClinica.dto.salida.PacienteSalidaDto;
+import com.backend.proyectoClinica.exceptions.ResourceNotFoundException;
 import com.backend.proyectoClinica.service.IPacienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,14 +43,14 @@ public class PacienteController {
 
     //PUT
     @PutMapping("/actualizar/{id}")//localhost:8080/pacientes/actualizar/x
-    public ResponseEntity<PacienteSalidaDto> actualizarPaciente(@RequestBody @Valid PacienteEntradaDto paciente){
-        return null; //pacienteService.actualizar(paciente);
+    public ResponseEntity<PacienteSalidaDto> actualizarPaciente(@RequestBody @Valid PacienteEntradaDto paciente, @PathVariable Long id) throws ResourceNotFoundException{
+        return new ResponseEntity<>(pacienteService.modificarPaciente(paciente, id), HttpStatus.OK);
     }
 
     //DELETE
     @DeleteMapping("/eliminar")//localhost:8080/pacientes/eliminar?id=x
-    public ResponseEntity<?> eliminarPaciente(@RequestParam Long id){
-        //pacienteService.eliminarPaciente(id);
+    public ResponseEntity<?> eliminarPaciente(@RequestParam Long id) throws ResourceNotFoundException {
+        pacienteService.eliminarPaciente(id);
         return new ResponseEntity<>("Paciente eliminado correctamente", HttpStatus.NO_CONTENT);
     }
 }
