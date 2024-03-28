@@ -6,6 +6,7 @@ import com.backend.proyectoClinica.dto.salida.PacienteSalidaDto;
 import com.backend.proyectoClinica.dto.salida.TurnoSalidaDto;
 import com.backend.proyectoClinica.entity.Turno;
 import com.backend.proyectoClinica.exceptions.BadRequestException;
+import com.backend.proyectoClinica.exceptions.ResourceNotFoundException;
 import com.backend.proyectoClinica.repository.TurnoRepository;
 import com.backend.proyectoClinica.service.ITurnoService;
 import com.backend.proyectoClinica.utils.JsonPrinter;
@@ -81,7 +82,7 @@ public class TurnoService implements ITurnoService {
         TurnoSalidaDto turnoEncontrado = null;
 
         if(turnoBuscado != null){
-            turnoEncontrado = modelMapper.map(turnoBuscado, TurnoSalidaDto.class);
+            turnoEncontrado = entidadADtoSalida(turnoBuscado);
             LOGGER.info("Turno encontrado: {}", JsonPrinter.toString(turnoEncontrado));
 
         } else LOGGER.error("El id no se encuentra registrado en la base de datos");
@@ -91,14 +92,39 @@ public class TurnoService implements ITurnoService {
     }
 
     @Override
-    public void eliminarTurno(Long id) {
+    public void eliminarTurno(Long id) throws ResourceNotFoundException {
+
+        if (buscarTurnoPorId(id) != null) {
+            turnoRepository.deleteById(id);
+            LOGGER.warn("Se ha eliminado el paciente con id {}", id);
+        } else {
+            throw new ResourceNotFoundException("No existe registro de paciente con id " + id);
+        }
 
     }
 
     @Override
-    public TurnoSalidaDto modificarTurno(TurnoEntradaDto turnoEntradaDto, Long id) {
-        return null;
+    public TurnoSalidaDto modificarTurno(TurnoEntradaDto turnoEntradaDto, Long id) throws ResourceNotFoundException{
+        Turno turnoRecibido = modelMapper.map(turnoEntradaDto, Turno.class);
+        Turno turnoParaActualizar = turnoRepository.findById(id).orElse(null);
+        TurnoSalidaDto turnoSalidaDto = null;
+
+        if(turnoParaActualizar != null){
+            turnoParaActualizar.setOdontologo(turnoRecibido.getOdontologo());
+            turnoParaActualizar.setPaciente(turnoRecibido.getPaciente());
+            turnoParaActualizar.setFechaYHora(turnoRecibido.getFechaYHora());
+            turnoRepository.save(turnoParaActualizar);
+
+
+            turnoSalidaDto = entidadADtoSalida(turnoParaActualizar);
+            LOGGER.warn("El turno fue actualizado con exito: {}", JsonPrinter.toString(turnoSalidaDto));
+        }else {
+            LOGGER.error("No fue posible actualizar el turno porque no se encuentra en nuestra base de datos");
+            throw new ResourceNotFoundException("No es posible actualizar el turno con id " + id + " ya que no se encuentra en nuestra base de datos");
+        }
+        return turnoSalidaDto;
     }
+
 
     private PacienteSalidaDto pacienteSalidaDtoASalidaTurnoDto(Long id) {
         return pacienteService.buscarPacientePorId(id);

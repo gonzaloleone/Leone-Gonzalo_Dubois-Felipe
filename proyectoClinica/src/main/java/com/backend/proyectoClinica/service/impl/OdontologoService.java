@@ -78,14 +78,13 @@ public class OdontologoService implements IOdontologoService {
             odontologoRepository.deleteById(id);
             LOGGER.warn("Se ha eliminado el odontologo con id {}", id);
         } else {
-            //LOGGER.error("No se ha encontrado el paciente con id {}", id);
             throw new ResourceNotFoundException("No existe registro de odontologo con id " + id);
         }
 
     }
 
     @Override
-    public OdontologoSalidaDto modificarOdontologo(OdontologoEntradaDto odontologoEntradaDto, Long id) {
+    public OdontologoSalidaDto modificarOdontologo(OdontologoEntradaDto odontologoEntradaDto, Long id) throws ResourceNotFoundException{
         Odontologo odontologoRecibido = modelMapper.map(odontologoEntradaDto, Odontologo.class);
         Odontologo odontologoAActualizar = odontologoRepository.findById(id).orElse(null);
         OdontologoSalidaDto odontologoSalidaDto = null;

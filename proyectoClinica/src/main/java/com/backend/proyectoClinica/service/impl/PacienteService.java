@@ -52,13 +52,6 @@ public class PacienteService implements IPacienteService {
                 .map(paciente -> modelMapper.map(paciente, PacienteSalidaDto.class))
                 .toList();
 
-        //List<Paciente> pacientes = pacienteIDao.listarTodos();
-        //List<PacienteSalidaDto> pacientesSalidaDto = new ArrayList<>();
-        //for (Paciente paciente : pacientes){
-        //    PacienteSalidaDto pacienteSalida = modelMapper.map(paciente, PacienteSalidaDto.class);
-        //    pacientesSalidaDto.add(pacienteSalida);
-        //}
-
         LOGGER.info("Listado de todos los pacientes: {}", JsonPrinter.toString(pacientesSalidaDto));
         return pacientesSalidaDto;
     }
@@ -85,7 +78,6 @@ public class PacienteService implements IPacienteService {
             pacienteRepository.deleteById(id);
             LOGGER.warn("Se ha eliminado el paciente con id {}", id);
         } else {
-            //LOGGER.error("No se ha encontrado el paciente con id {}", id);
             throw new ResourceNotFoundException("No existe registro de paciente con id " + id);
         }
 

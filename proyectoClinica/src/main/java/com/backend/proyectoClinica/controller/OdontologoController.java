@@ -22,33 +22,33 @@ public class OdontologoController {
         this.odontologoService = odontologoService;
     }
 
-    //GET
+
     @GetMapping()
     public ResponseEntity<List<OdontologoSalidaDto>> listarOdontologos(){
         return new ResponseEntity<>(odontologoService.listarOdontologos(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}") //localhost:8080/pacientes/x
+    @GetMapping("/{id}")
     public ResponseEntity<OdontologoSalidaDto> buscarPacientePorId(@PathVariable Long id){
        return new ResponseEntity<>(odontologoService.buscarOdontologoPorId(id), HttpStatus.OK);
     }
 
 
-    //POST
+
     @PostMapping("/registrar")
     public ResponseEntity<OdontologoSalidaDto> guardarOdontologo(@RequestBody @Valid OdontologoEntradaDto odontologo){
         return new ResponseEntity<>(odontologoService.guardarOdontologo(odontologo), HttpStatus.CREATED);
     }
 
 
-    //PUT
-    @PutMapping("/actualizar/{id}")//localhost:8080/odontologo/actualizar/x
+
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<OdontologoSalidaDto> actualizarOdontologo(@RequestBody @Valid OdontologoEntradaDto odontologo, @PathVariable Long id) throws ResourceNotFoundException{
         return new ResponseEntity<>(odontologoService.modificarOdontologo(odontologo, id), HttpStatus.OK);
     }
 
-    //DELETE
-    @DeleteMapping("/eliminar")//localhost:8080/odontologos/eliminar?id=x
+
+    @DeleteMapping("/eliminar")
     public ResponseEntity<?> eliminarOdontologo(@RequestParam Long id) throws ResourceNotFoundException {
         odontologoService.eliminarOdontologo(id);
         return new ResponseEntity<>("Odontologo eliminado correctamente", HttpStatus.NO_CONTENT);
