@@ -32,15 +32,10 @@ public class OdontologoService implements IOdontologoService {
 
     @Override
     public OdontologoSalidaDto guardarOdontologo(OdontologoEntradaDto odontologo){
-        //Logueamos lo que recibimos
         LOGGER.info("OdontologoEntradaDto: {}", JsonPrinter.toString(odontologo));
-        //convertimos mediante el mapper de dtoEntrada a entidad
         Odontologo odontologoEntidad = modelMapper.map(odontologo, Odontologo.class);
-        //mandamos a persistir a la capa dao y obtenemos una entidad con ID
         Odontologo odontologoEntidaConId = odontologoRepository.save(odontologoEntidad);
-        //transformamos la entidad obtenida en salidaDto
         OdontologoSalidaDto odontologoSalidaDto = modelMapper.map(odontologoEntidaConId, OdontologoSalidaDto.class);
-        //Logueamos lo que sale
         LOGGER.info("Odontologo registrado con exito: {}",  JsonPrinter.toString(odontologoSalidaDto));
         return odontologoSalidaDto;
     }

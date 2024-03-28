@@ -32,15 +32,10 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public PacienteSalidaDto guardarPaciente(PacienteEntradaDto paciente) {
-        //Logueamos lo que recibimos
         LOGGER.info("PacienteEntradaDto: {}", JsonPrinter.toString(paciente));
-        //convertimos mediante el mapper de dtoEntrada a entidad
         Paciente pacienteEntidad = modelMapper.map(paciente, Paciente.class);
-        //mandamos a persistir a la capa dao y obtenemos una entidad con ID
         Paciente pacienteEntidaConId = pacienteRepository.save(pacienteEntidad);
-        //transformamos la entidad obtenida en salidaDto
         PacienteSalidaDto pacienteSalidaDto = modelMapper.map(pacienteEntidaConId, PacienteSalidaDto.class);
-        //Logueamos lo que sale
         LOGGER.info("Paciente registrado con exito: {}",  JsonPrinter.toString(pacienteSalidaDto));
         return pacienteSalidaDto;
     }
