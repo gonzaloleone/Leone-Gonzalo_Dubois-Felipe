@@ -96,9 +96,9 @@ public class TurnoService implements ITurnoService {
 
         if (buscarTurnoPorId(id) != null) {
             turnoRepository.deleteById(id);
-            LOGGER.warn("Se ha eliminado el paciente con id {}", id);
+            LOGGER.warn("Se ha eliminado el turno con id {}", id);
         } else {
-            throw new ResourceNotFoundException("No existe registro de paciente con id " + id);
+            throw new ResourceNotFoundException("No existe registro de turno con id " + id);
         }
 
     }

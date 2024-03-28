@@ -1,49 +1,76 @@
-function fetchPatient("/pacientes") {
-    const patientInfoDiv = document.getElementById('patientInfo');
-    const loaderDiv = document.getElementById('loader');
-    const errorMessageDiv = document.getElementById('error-message');
+window.addEventListener('load', function(){
+    let formRegistrar = document.querySelector(".registrarForm");
+    let formBuscar = document.querySelector(".buscarForm");
+    let formBorrar = document.querySelector(".formularioBorrar");
+    let formModificar = document.querySelector(".formularioModificar");
+    let btnMostrar = document.querySelector(".mostrarPacientes");
+    let mostrarMensajeEnList = document.querySelector(".lugarParaMostrarPacientes");
 
-    // Mostrar el indicador de carga
-    loaderDiv.style.display = 'block';
-    errorMessageDiv.style.display = 'none';
+    let url = "http://localhost:8081/pacientes";
 
-    fetch('http://localhost:8081/pacientes/registrar')
-    .then(response => {
-        // Ocultar el indicador de carga
-        loaderDiv.style.display = 'none';
-
-        // Si la respuesta no es exitosa, lanzar un error
-        if (!response.ok) {
-            throw new Error('Error al obtener la información del paciente.');
-        }
-        return response.json();
-    })
-    .then(data => displayPatient(data))
-    .catch(error => {
-        // Ocultar el indicador de carga y mostrar el mensaje de error
-        loaderDiv.style.display = 'none';
-        errorMessageDiv.style.display = 'block';
-        errorMessageDiv.textContent = error.message;
-        console.error('Error al obtener la información del paciente:', error);
+    // Registrar ENVIO
+    formRegistrar.addEventListener('submit', function(event) {
+        event.preventDefault();
+        registrarPaciente();
     });
-}
 
-// Muestra info del paciente
-function displayPatient(patient) {
-    const patientInfo = document.getElementById('patientInfo');
-    const errorMessageDiv = document.getElementById('error-message');
+    formBuscar.addEventListener('submit', function(event){
+        event.preventDefault();
+        let id = document.querySelector("#idBuscar").value;
+        if (id) {
+            buscarPaciente(id);
+        } else {
+            alert("Por favor, ingrese un ID antes de buscar.");
+        }
+    });
 
-    // Para ocultar  mensaje de error
-    errorMessageDiv.style.display = 'none';
+    btnMostrar.addEventListener('click', ()=>{
+        listarPacientes();
+    })
 
-    const patientData = `
-        <p><strong>Nombre:</strong> ${patient.name}</p>
-        <p><strong>Edad:</strong> ${patient.age}</p>
-        <p><strong>Problema:</strong> ${patient.problem}</p>
-    `;
+    formBorrar.addEventListener('submit', function(event){
+        event.preventDefault()
+        let id = document.querySelector("#idBorrar").value;
+        if (id){
+            eliminarPaciente(id)
+        }else{
+            alert("Ingrese el id, para poder borrar el paciente.")
+        }
+    })
 
-    patientInfo.innerHTML = patientData;
-}
+    formModificar.addEventListener('submit', (e) => {
+        e.preventDefault();
+        modificarPaciente();
+    });
 
-// Llamar a la función fetchPatient al cargar la página
-fetchPatient();
+    // FUNCIONES
+
+    function registrarPaciente(){
+        // Resto del código para registrar paciente
+
+        fetch(${url}/registrar, settings)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Error al registrar el paciente');
+                }
+            })
+            .then(data => {
+                console.log("El paciente se registró exitosamente:", data);
+                mostrarDatosPaciente(data, formRegistrar);
+                mostrarMensajeExito(formRegistrar);
+                // Mostrar alerta de éxito
+                alert("El paciente se registró correctamente.");
+                return data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarMensajeError(formRegistrar);
+                throw error;
+            });
+    }
+
+    // Resto del código
+
+});

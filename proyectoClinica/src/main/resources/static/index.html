@@ -3,16 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinica Odontológica - Frontend</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Gestión Odontológica</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Información del Paciente</h1>
-<div id="patientInfo">
-    <!-- Aca se mostraria la info del paciente o mensaje de error -->
-</div>
-<div id="loader" style="display: none;">Cargando...</div>
-<div id="error-message" style="display: none; color: red;"></div>
+<header>
+    <div class="navbar">
+        <div class="left-section">
+            <a href="#" class="logo">Gestión Odontólogos</a>
+        </div>
+        <div class="right-section">
+            <a href="#" class="nav-item">Gestión de Pacientes</a>
+            <a href="#" class="nav-item">Turnos</a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <h2>Documentación Odontólogo</h2>
+    <label for="apellidoNombre">Apellido y Nombre:</label><br>
+    <input type="text" id="apellidoNombre" name="apellidoNombre" required><br><br>
+
+    <label for="matricula">Matrícula:</label><br>
+    <input type="text" id="matricula" name="matricula" required><br><br>
+
+    <button id="agregarOdontologoBtn">Agregar Odontólogo</button>
+</main>
 
 <script src="clinica.js"></script>
 </body>

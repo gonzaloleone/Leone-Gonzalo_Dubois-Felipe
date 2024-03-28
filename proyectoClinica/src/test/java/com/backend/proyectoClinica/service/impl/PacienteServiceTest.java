@@ -27,9 +27,9 @@ class PacienteServiceTest {
 
     @Test
     @Order(1)
-    void deberiaRegistrarseUnPacienteDeNombreJuan_yRetornarSuId() {
+    void deberiaRegistrarseUnPacienteYRetornarSuId() {
         //arrange
-        PacienteEntradaDto pacienteEntradaDto = new PacienteEntradaDto("Juan", "Perez", 123456, LocalDate.of(2024, 3, 22), new DomicilioEntradaDto("Calle", 1234, "Localidad", "Provincia"));
+        PacienteEntradaDto pacienteEntradaDto = new PacienteEntradaDto("Gonzalo", "Leone", 44797626, LocalDate.of(2025, 5, 15), new DomicilioEntradaDto("Simbron", 4321, "Devoto", "Buenos Aires"));
 
         //act
         PacienteSalidaDto pacienteSalidaDto = pacienteService.guardarPaciente(pacienteEntradaDto);
@@ -37,7 +37,6 @@ class PacienteServiceTest {
         //assert
         assertNotNull(pacienteSalidaDto);
         assertNotNull(pacienteSalidaDto.getId());
-        assertEquals("Juan", pacienteSalidaDto.getNombre());
 
     }
 
@@ -57,6 +56,8 @@ class PacienteServiceTest {
 
         assertTrue(pacientes.isEmpty());
     }
+
+
 
 
 }

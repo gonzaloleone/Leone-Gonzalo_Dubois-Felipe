@@ -41,7 +41,7 @@ public class OdontologoService implements IOdontologoService {
         //transformamos la entidad obtenida en salidaDto
         OdontologoSalidaDto odontologoSalidaDto = modelMapper.map(odontologoEntidaConId, OdontologoSalidaDto.class);
         //Logueamos lo que sale
-        LOGGER.info("OdontologoSalidaDto: {}",  JsonPrinter.toString(odontologoSalidaDto));
+        LOGGER.info("Odontologo registrado con exito: {}",  JsonPrinter.toString(odontologoSalidaDto));
         return odontologoSalidaDto;
     }
 

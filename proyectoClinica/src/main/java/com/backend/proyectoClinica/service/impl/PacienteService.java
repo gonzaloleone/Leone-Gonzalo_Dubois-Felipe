@@ -41,7 +41,7 @@ public class PacienteService implements IPacienteService {
         //transformamos la entidad obtenida en salidaDto
         PacienteSalidaDto pacienteSalidaDto = modelMapper.map(pacienteEntidaConId, PacienteSalidaDto.class);
         //Logueamos lo que sale
-        LOGGER.info("PacienteSalidaDto: {}",  JsonPrinter.toString(pacienteSalidaDto));
+        LOGGER.info("Paciente registrado con exito: {}",  JsonPrinter.toString(pacienteSalidaDto));
         return pacienteSalidaDto;
     }
 
