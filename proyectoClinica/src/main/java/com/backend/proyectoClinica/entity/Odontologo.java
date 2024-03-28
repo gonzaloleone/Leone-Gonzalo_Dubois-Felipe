@@ -6,11 +6,11 @@ import javax.persistence.*;
 @Table(name = "ODONTOLOGOS")
 public class Odontologo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 50)
-    private int numeroMatricula;
+    private String numeroMatricula;
     @Column(length = 50)
     private String nombre;
     @Column(length = 50)
@@ -21,7 +21,7 @@ public class Odontologo {
     public Odontologo() {
     }
 
-    public Odontologo(Long id, int numeroMatricula, String nombre, String apellido) {
+    public Odontologo(Long id, String numeroMatricula, String nombre, String apellido) {
         this.id = id;
         this.numeroMatricula = numeroMatricula;
         this.nombre = nombre;
@@ -36,11 +36,11 @@ public class Odontologo {
         this.id = id;
     }
 
-    public int getNumeroMatricula() {
+    public String getNumeroMatricula() {
         return numeroMatricula;
     }
 
-    public void setNumeroMatricula(int numeroMatricula) {
+    public void setNumeroMatricula(String numeroMatricula) {
         this.numeroMatricula = numeroMatricula;
     }
 

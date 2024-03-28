@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Turno {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -34,9 +34,9 @@ public class Turno {
         return id;
     }
 
-    public void setId(Long id) {
+    /*public void setId(Long id) {
         this.id = id;
-    }
+    }*/
 
     public Odontologo getOdontologo() {
         return odontologo;

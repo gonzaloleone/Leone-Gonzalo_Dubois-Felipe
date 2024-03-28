@@ -35,7 +35,7 @@ public class OdontologoController {
 
 
     //POST
-    @PostMapping("/guardar")
+    @PostMapping("/registrar")
     public ResponseEntity<OdontologoSalidaDto> guardarOdontologo(@RequestBody @Valid OdontologoEntradaDto odontologo){
         return new ResponseEntity<>(odontologoService.guardarOdontologo(odontologo), HttpStatus.CREATED);
     }

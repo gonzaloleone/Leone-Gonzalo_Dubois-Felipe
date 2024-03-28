@@ -86,7 +86,28 @@ public class OdontologoService implements IOdontologoService {
 
     @Override
     public OdontologoSalidaDto modificarOdontologo(OdontologoEntradaDto odontologoEntradaDto, Long id) {
-        return null;
+        Odontologo odontologoRecibido = modelMapper.map(odontologoEntradaDto, Odontologo.class);
+        Odontologo odontologoAActualizar = odontologoRepository.findById(id).orElse(null);
+        OdontologoSalidaDto odontologoSalidaDto = null;
+
+        if (odontologoAActualizar != null) {
+
+            odontologoAActualizar.setNombre(odontologoRecibido.getNombre());
+            odontologoAActualizar.setApellido(odontologoRecibido.getApellido());
+            odontologoAActualizar.setNumeroMatricula(odontologoRecibido.getNumeroMatricula());
+            odontologoRepository.save(odontologoAActualizar);
+
+            odontologoSalidaDto = modelMapper.map(odontologoAActualizar, OdontologoSalidaDto.class);
+
+            LOGGER.warn("Odontologo actualizado: {}", odontologoSalidaDto);
+
+        } else {
+            LOGGER.error("No fue posible actualizar los datos ya que el odontologo no se encuentra registrado");
+
+        }
+
+
+        return odontologoSalidaDto;
     }
 
 

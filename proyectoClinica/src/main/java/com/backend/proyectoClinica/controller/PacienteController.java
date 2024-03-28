@@ -35,7 +35,7 @@ public class PacienteController {
 
 
     //POST
-    @PostMapping("/guardar")
+    @PostMapping("/registrar")
     public ResponseEntity<PacienteSalidaDto> guardarPaciente(@RequestBody @Valid PacienteEntradaDto paciente){
         return new ResponseEntity<>(pacienteService.guardarPaciente(paciente), HttpStatus.CREATED);
     }

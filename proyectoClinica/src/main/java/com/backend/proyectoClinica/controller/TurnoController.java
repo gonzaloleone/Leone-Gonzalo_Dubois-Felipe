@@ -18,7 +18,7 @@ public class TurnoController {
 
     private ITurnoService turnoService;
 
-    public TurnoController(ITurnoService turnoService) {
+    public TurnoController(ITurnoService turnoService){
         this.turnoService = turnoService;
     }
 
@@ -35,7 +35,7 @@ public class TurnoController {
 
 
     //POST
-    @PostMapping("/guardar")
+    @PostMapping("/registrar")
     public ResponseEntity<TurnoSalidaDto> guardarTurno(@RequestBody @Valid TurnoEntradaDto turno) throws BadRequestException {
         return new ResponseEntity<>(turnoService.guardarTurno(turno), HttpStatus.CREATED);
     }
