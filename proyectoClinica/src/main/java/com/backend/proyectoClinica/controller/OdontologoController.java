@@ -30,7 +30,7 @@ public class OdontologoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<OdontologoSalidaDto> buscarPacientePorId(@PathVariable Long id){
-       return new ResponseEntity<>(odontologoService.buscarOdontologoPorId(id), HttpStatus.OK);
+        return new ResponseEntity<>(odontologoService.buscarOdontologoPorId(id), HttpStatus.OK);
     }
 
 
